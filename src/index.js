@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChatContainer from './ChatContainer';
+import ChatContainer from './components/ChatContainer';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
