@@ -5,7 +5,7 @@ div {
 }
 
 .main-container {
-  min-height: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -21,16 +21,17 @@ div {
 }
 
 .chat-container {
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
   overflow: hidden;
   padding: 0px 0px 0px 200px;
 }
 
 .input-container {
-  position: absolute;
-  bottom: 10px;
-  left: 220px;
-  right: 20px;
+  width: 100%;
+  padding: 10px 20px;
 }
 
 textarea#input {
@@ -49,4 +50,22 @@ textarea#input {
 
 textarea#input:focus {
   outline: none;
+}
+
+.output-messages-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 90%;
+  padding: 5px 20px;
+}
+
+.output-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  max-height: 90%;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-end;
 }

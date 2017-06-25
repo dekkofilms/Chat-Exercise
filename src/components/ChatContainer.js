@@ -12,19 +12,23 @@ class ChatContainer extends Component {
     this.state = {
       messages: [],
       input: '',
-      links: [],
-      messageCount: 0
+      links: []
     };
 
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
     this.preventTextArea = this.preventTextArea.bind(this);
+    this.updateScroll = this.updateScroll.bind(this);
 
     this.isMention = this.isMention.bind(this);
     this.isEmoticon = this.isEmoticon.bind(this);
     this.getTitle = this.getTitle.bind(this);
 
     this.parseInput = this.parseInput.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.updateScroll();
   }
 
   handleMessageChange(event) {
@@ -87,7 +91,7 @@ class ChatContainer extends Component {
   }
 
   handleMessageSubmit(e) {
-    if (e.keyCode === 13 && this.state.input != '') {
+    if (e.keyCode === 13 && this.state.input !== '') {
       this.parseInput().then((message) => {
 
         let output = {};
@@ -95,11 +99,11 @@ class ChatContainer extends Component {
 
         message.forEach((content) => {
           if (content.mentions) {
-            (content.mentions.length > 0) ? output.mentions = content.mentions : null;
+            content.mentions.length > 0 && (output.mentions = content.mentions);
           }
 
           if (content.emoticons) {
-            (content.emoticons.length > 0) ? output.emoticons = content.emoticons : null;
+            content.emoticons.length > 0 && (output.emoticons = content.emoticons);
           }
 
           if(content.url) {
@@ -108,7 +112,7 @@ class ChatContainer extends Component {
 
         });
 
-        (links.length > 0) ? output.links = links : null;
+        links.length > 0 && (output.links = links);
         const messages = [...this.state.messages];
 
         messages.push(output);
@@ -142,6 +146,11 @@ class ChatContainer extends Component {
 
     promises.push({mentions: mentions}, {emoticons: emoticons});
     return Promise.all(promises);
+  }
+
+  updateScroll() {
+    const elem = document.getElementById('messages');
+    elem.scrollTop = elem.scrollHeight;
   }
 
   render() {
