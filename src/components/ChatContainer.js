@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../assets/styles/main.css';
-
 import Messages from './Messages';
+
+import Textarea from 'react-textarea-autosize';
 
 class ChatContainer extends Component {
 
@@ -17,6 +18,7 @@ class ChatContainer extends Component {
 
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this.preventTextArea = this.preventTextArea.bind(this);
 
     this.isMention = this.isMention.bind(this);
     this.isEmoticon = this.isEmoticon.bind(this);
@@ -78,33 +80,41 @@ class ChatContainer extends Component {
     })
   }
 
-  handleMessageSubmit() {
-    this.parseInput().then((message) => {
+  preventTextArea(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault()
+    }
+  }
 
-      let output = {};
-      let links = [];
+  handleMessageSubmit(e) {
+    if (e.keyCode === 13 && this.state.input != '') {
+      this.parseInput().then((message) => {
 
-      message.forEach((content) => {
-        if (content.mentions) {
-          (content.mentions.length > 0) ? output.mentions = content.mentions : null;
-        }
+        let output = {};
+        let links = [];
 
-        if (content.emoticons) {
-          (content.emoticons.length > 0) ? output.emoticons = content.emoticons : null;
-        }
+        message.forEach((content) => {
+          if (content.mentions) {
+            (content.mentions.length > 0) ? output.mentions = content.mentions : null;
+          }
 
-        if(content.url) {
-          links.push(content);
-        }
+          if (content.emoticons) {
+            (content.emoticons.length > 0) ? output.emoticons = content.emoticons : null;
+          }
 
+          if(content.url) {
+            links.push(content);
+          }
+
+        });
+
+        (links.length > 0) ? output.links = links : null;
+        const messages = [...this.state.messages];
+
+        messages.push(output);
+        this.setState({ messages, input: '' });
       });
-
-      (links.length > 0) ? output.links = links : null;
-      const messages = [...this.state.messages];
-
-      messages.push(output);
-      this.setState({ messages });
-    });
+    }
   }
 
   parseInput() {
@@ -136,22 +146,26 @@ class ChatContainer extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
+      <div className="main-container">
+        <div className="side-nav">
           <h2>Chat Bot</h2>
         </div>
-        <input
-          type="text"
-          onChange={this.handleMessageChange}
-          value={this.state.input}
-        />
-        <button onClick={this.handleMessageSubmit}>
-          Enter
-        </button>
-
-        <Messages
-          messages={this.state.messages}
-        />
+        <div className="chat-container">
+          <Messages
+            messages={this.state.messages}
+          />
+          <div className="input-container">
+            <Textarea
+              id="input"
+              wrap="soft"
+              type="submit"
+              onChange={this.handleMessageChange}
+              onKeyUp={this.handleMessageSubmit}
+              onKeyDown={this.preventTextArea}
+              value={this.state.input}
+            />
+          </div>
+        </div>
       </div>
     );
   }
