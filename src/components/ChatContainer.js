@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../assets/styles/main.css';
 import Messages from './Messages';
 
+import update from 'immutability-helper';
 import Textarea from 'react-textarea-autosize';
 
 class ChatContainer extends Component {
@@ -11,24 +12,32 @@ class ChatContainer extends Component {
 
     this.state = {
       messages: [],
-      input: '',
-      links: []
+      input: ''
     };
 
+    // handle change and submission
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+    this.parseInput = this.parseInput.bind(this);
+
+    // text area and scrolling functionality
     this.preventTextArea = this.preventTextArea.bind(this);
     this.updateScroll = this.updateScroll.bind(this);
 
+    // helper functions
     this.isMention = this.isMention.bind(this);
     this.isEmoticon = this.isEmoticon.bind(this);
     this.getTitle = this.getTitle.bind(this);
 
-    this.parseInput = this.parseInput.bind(this);
   }
 
   componentDidUpdate() {
     this.updateScroll();
+  }
+
+  updateScroll() {
+    const elem = document.getElementById('messages');
+    elem.scrollTop = elem.scrollHeight;
   }
 
   handleMessageChange(event) {
@@ -78,7 +87,7 @@ class ChatContainer extends Component {
       return {
         url: url,
         title: (title) ? title : ''
-      }
+      };
     }).then((linkObj) => {
       return linkObj;
     })
@@ -86,7 +95,7 @@ class ChatContainer extends Component {
 
   preventTextArea(e) {
     if (e.keyCode === 13) {
-      e.preventDefault()
+      e.preventDefault();
     }
   }
 
@@ -113,9 +122,11 @@ class ChatContainer extends Component {
         });
 
         links.length > 0 && (output.links = links);
-        const messages = [...this.state.messages];
 
-        messages.push(output);
+        // pushing in the new message into state
+        const messages = update(this.state.messages, {$push: [output]});
+
+        // setting state
         this.setState({ messages, input: '' });
       });
     }
@@ -148,16 +159,11 @@ class ChatContainer extends Component {
     return Promise.all(promises);
   }
 
-  updateScroll() {
-    const elem = document.getElementById('messages');
-    elem.scrollTop = elem.scrollHeight;
-  }
-
   render() {
     return (
       <div className="main-container">
         <div className="side-nav">
-          <h2>Chat Bot</h2>
+          <h2>Chat Exercise</h2>
         </div>
         <div className="chat-container">
           <Messages
