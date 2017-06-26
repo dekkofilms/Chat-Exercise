@@ -19,3 +19,9 @@ I started the project with a tiny input box and a div container for presenting t
 After I had accomplished the input/output challenge, I wanted to make the UI feel slightly more like a chat box. My two main goals in that was 1) allow the input box to expand when the text goes to another line, and 2) display the messages how they would normally be presented in a chat UI, and keep the scroll bar down when new messages are being entered.
 
 Would love to answer anymore questions that you may have in regards to this exercise!
+
+#### It's also deployed
+
+https://chat-exercise.herokuapp.com/
+
+Here is the link to a deployed version. It's on a free dyno, so it may or may not be asleep. :)
