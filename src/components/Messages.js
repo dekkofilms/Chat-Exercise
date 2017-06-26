@@ -8,7 +8,8 @@ const Messages = ({messages}) => (
         messages.map((message, i) => (
           <div
             key={i}
-            style={{whiteSpace: 'pre'}}
+            className="message"
+            style={{whiteSpace: 'pre-wrap'}}
           >
             {JSON.stringify(message, undefined, 4)}
           </div>

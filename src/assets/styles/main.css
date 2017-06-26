@@ -1,9 +1,11 @@
+/*BORDER BOX DIVS*/
 div {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
+/*CONTAINERS*/
 .main-container {
   height: 100%;
   overflow: hidden;
@@ -29,6 +31,7 @@ div {
   padding: 0px 0px 0px 200px;
 }
 
+/*INPUT FIELD*/
 .input-container {
   width: 100%;
   padding: 10px 20px;
@@ -52,6 +55,7 @@ textarea#input:focus {
   outline: none;
 }
 
+/*MESSAGES*/
 .output-messages-wrapper {
   display: flex;
   flex-direction: column;
@@ -63,9 +67,13 @@ textarea#input:focus {
 .output-content {
   overflow-y: auto;
   overflow-x: hidden;
-  word-wrap: break-word;
   max-height: 90%;
   flex: 1 1 auto;
   flex-direction: column;
   justify-content: flex-end;
+  padding: 5px 10px;
+}
+
+.message {
+  padding: 10px 0px;
 }
