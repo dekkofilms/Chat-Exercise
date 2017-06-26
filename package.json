@@ -6,9 +6,10 @@
     "react-scripts": "1.0.7"
   },
   "dependencies": {
-    "immutability-helper": "^2.2.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "immutability-helper": "2.2.2",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-textarea-autosize": "5.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
