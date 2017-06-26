@@ -56,7 +56,8 @@ class ChatContainer extends Component {
   }
 
   isEmoticon(word) {
-    if (word.charAt(0) === "(" && word.charAt(word.length - 1) === ")") {
+    let whiteSpaceReg = /^\S*$/;
+    if (word.charAt(0) === "(" && word.charAt(word.length - 1) === ")" && word.length <= 17 && whiteSpaceReg.test(word)) {
       return true;
     }
 
@@ -71,7 +72,7 @@ class ChatContainer extends Component {
 
   getTitle(url) {
     let headers = new Headers({
-      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'text/html'
     });
 
@@ -171,6 +172,7 @@ class ChatContainer extends Component {
           />
           <div className="input-container">
             <Textarea
+              ref="input"
               id="input"
               wrap="soft"
               type="submit"
